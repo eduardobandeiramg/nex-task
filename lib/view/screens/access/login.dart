@@ -6,9 +6,14 @@ import 'package:nex_task/view/components/text_form_fields/standard_text_form_fie
 import 'package:nex_task/utils/enums/text_form_field_input.dart';
 import 'package:nex_task/view/screens/access/register.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 

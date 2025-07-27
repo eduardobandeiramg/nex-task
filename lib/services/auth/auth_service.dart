@@ -23,4 +23,8 @@ class AuthService {
 
     return {"session": session, "user": user};
   }
+
+  Future<void> logout() async {
+    await supabaseClient.auth.signOut();
+  }
 }

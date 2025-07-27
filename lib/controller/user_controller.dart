@@ -37,6 +37,10 @@ class UserController {
       return {"session": "error", "user": "error"};
     }
   }
+
+  Future<void> logout() async {
+    await AuthService().logout();
+  }
 }
 
 bool checkUpperCase(String password) {
