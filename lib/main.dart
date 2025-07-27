@@ -5,7 +5,6 @@ import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/authentication_state.dart';
 import 'package:nex_task/utils/supabase_consts.dart';
 import 'package:nex_task/view/screens/access/login.dart';
-import 'package:nex_task/view/screens/access/register.dart';
 import 'package:nex_task/view/screens/auth_gate/auth_gate.dart';
 import 'package:nex_task/view/screens/navigation_screen/navigation_screen.dart';
 import 'package:nex_task/view/state_management/supabase_client_storage.dart';
