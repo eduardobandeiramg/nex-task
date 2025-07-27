@@ -13,7 +13,7 @@ class ProfileCard extends StatelessWidget {
       padding: EdgeInsets.only(left: 3, right: 3, top: 12),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(width: 3, color: Colors.grey),
         ),
         height: Dimensions.height * 0.07,
