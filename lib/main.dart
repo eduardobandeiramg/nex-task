@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nex_task/utils/app_color.dart';
 import 'package:nex_task/utils/dimensions.dart';
+import 'package:nex_task/utils/supabase_consts.dart';
 import 'package:nex_task/view/screens/access/login.dart';
+import 'package:nex_task/view/screens/access/register.dart';
 import 'package:nex_task/view/screens/navigation_screen.dart';
+import 'package:nex_task/view/state_management/supabase_client_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+Future<void> main() async {
+  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+  SupabaseClientStorage.supabaseClient = Supabase.instance.client;
   runApp(const MyApp());
 }
 
@@ -16,13 +22,13 @@ class MyApp extends StatelessWidget {
     Dimensions.height = MediaQuery.of(context).size.height;
     Dimensions.width = MediaQuery.of(context).size.width;
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Nex Task',
       theme: ThemeData(
         primaryColor: Color.fromRGBO(78, 171, 233, 1),
         primarySwatch: AppColors.primarySwatch,
       ),
       debugShowCheckedModeBanner: false,
-      home: NavigationScreen(),
+      home: Register()//NavigationScreen(),
     );
   }
 }

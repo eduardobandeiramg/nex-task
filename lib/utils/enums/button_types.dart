@@ -1,0 +1,4 @@
+enum ButtonTypes{
+  createAccount,
+  login
+}

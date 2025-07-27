@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nex_task/utils/dimensions.dart';
+import 'package:nex_task/utils/enums/button_types.dart';
 import 'package:nex_task/view/components/buttons/standard_button.dart';
 import 'package:nex_task/view/components/text_form_fields/standard_text_form_field.dart';
+import 'package:nex_task/utils/enums/text_form_field_input.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
+  Login({super.key});
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +27,16 @@ class Login extends StatelessWidget {
                 ),
               ),
               SizedBox(height: Dimensions.height * 0.1),
-              StandardTextFormField(hintText: "e-mail"),
-              StandardTextFormField(hintText: "password"),
+              StandardTextFormField(
+                textFormFieldInput: TextFormFieldInput.email,
+                controller: emailController,
+              ),
+              StandardTextFormField(
+                textFormFieldInput: TextFormFieldInput.password,
+                controller: passwordController,
+              ),
               SizedBox(height: Dimensions.height * 0.1),
-              StandardButton(buttonText: "login"),
+              StandardButton(buttonTypes: ButtonTypes.login),
             ],
           ),
         ),
