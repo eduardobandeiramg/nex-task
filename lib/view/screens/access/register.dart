@@ -20,11 +20,12 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(iconTheme: IconThemeData(color: Theme.of(context).primaryColor)),
       body: SingleChildScrollView(
         child: Form(
           child: Column(
             children: [
-              SizedBox(height: Dimensions.height * 0.1),
+              //SizedBox(height: Dimensions.height * 0.1),
               Padding(
                 padding: EdgeInsets.all(12),
                 child: Text(

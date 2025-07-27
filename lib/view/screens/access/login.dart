@@ -4,6 +4,7 @@ import 'package:nex_task/utils/enums/button_types.dart';
 import 'package:nex_task/view/components/buttons/standard_button.dart';
 import 'package:nex_task/view/components/text_form_fields/standard_text_form_field.dart';
 import 'package:nex_task/utils/enums/text_form_field_input.dart';
+import 'package:nex_task/view/screens/access/register.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
@@ -35,8 +36,14 @@ class Login extends StatelessWidget {
                 textFormFieldInput: TextFormFieldInput.password,
                 controller: passwordController,
               ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register()));
+                },
+                child: Text("sign-up", style: TextStyle(color: Theme.of(context).primaryColor)),
+              ),
               SizedBox(height: Dimensions.height * 0.1),
-              StandardButton(buttonTypes: ButtonTypes.login),
+              StandardButton(buttonTypes: ButtonTypes.login, email: emailController.text, password1: passwordController.text,),
             ],
           ),
         ),

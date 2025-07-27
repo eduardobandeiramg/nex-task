@@ -17,7 +17,7 @@ class AuthGate extends Cubit<AuthenticationState> {
       final Session? session = data.session;
       print('EVENTO: $event, SESSÃO: $session');
       switch (event) {
-        case AuthChangeEvent.signedIn:
+        case AuthChangeEvent.signedIn || AuthChangeEvent.initialSession:
           emit(AuthenticationState.loggedIn);
         case AuthChangeEvent.signedOut:
           emit(AuthenticationState.loggedOut);

@@ -1,4 +1,5 @@
 import 'package:nex_task/services/auth/auth_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserController {
   AuthService authService = AuthService();
@@ -24,6 +25,14 @@ class UserController {
       } else {
         return {"session": "error", "user": "error"};
       }
+    } else {
+      return {"session": "error", "user": "error"};
+    }
+  }
+
+  Future<Map<String, dynamic>> login(String? email, String? password) async {
+    if (email != null && password != null) {
+      return await authService.login(email, password);
     } else {
       return {"session": "error", "user": "error"};
     }

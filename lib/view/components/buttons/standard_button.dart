@@ -3,6 +3,7 @@ import 'package:nex_task/controller/user_controller.dart';
 import 'package:nex_task/utils/app_color.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/button_types.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class StandardButton extends StatelessWidget {
   ButtonTypes buttonTypes;
@@ -19,7 +20,7 @@ class StandardButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () async {
           if(buttonTypes == ButtonTypes.login){
-
+            await UserController().login(email, password1);
           }
           else if(buttonTypes == ButtonTypes.createAccount){
             await UserController().createUser(email, password1, password2);
