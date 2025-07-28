@@ -7,8 +7,9 @@ class TasksController {
     print("RESPONSE: $response");
   }
 
-  static getTasks() async {
+  static Future<List<Map<String, dynamic>>> getTasks() async {
     var response = await TasksDatabase.getTasks();
     print("RESPOSTA DO GET TASKS PARA O CONTROLLER: $response");
+    return response;
   }
 }

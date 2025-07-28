@@ -4,13 +4,13 @@ import '../../model/models/task.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TasksDatabase {
-  static Future<dynamic> createTask(Task task) async {
+  static Future<Map<String, String>> createTask(Task task) async {
     var response = await Supabase.instance.client.from("tasks").insert(task.toMap());
     print("RESPOSTA DO CREATE: $response");
     return response;
   }
 
-  static Future<dynamic> getTasks() async {
+  static Future<List<Map<String, dynamic>>> getTasks() async {
     var response = await Supabase.instance.client
         .from("tasks")
         .select()
