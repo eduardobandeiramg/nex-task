@@ -18,4 +18,14 @@ class TasksDatabase {
     print("RESPOSTA DO GET TASKS: $response");
     return response;
   }
+
+  static Future<List<String>> getCategories() async {
+    List<String> categoriesList = [];
+    List<Map<String, dynamic>> tasksList = await TasksDatabase.getTasks();
+    for(var task in tasksList){
+      categoriesList.add(task["category"]);
+    }
+    print("LISTA DE CATEGORIAS: $categoriesList");
+    return categoriesList;
+  }
 }

@@ -12,7 +12,6 @@ class TasksList extends StatefulWidget {
 }
 
 class _TasksListState extends State<TasksList> {
-  ///TODO: START WITH LOADING!!
   TasksListScreenState screenState = TasksListScreenState.list;
 
   @override

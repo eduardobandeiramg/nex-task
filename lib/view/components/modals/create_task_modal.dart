@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nex_task/controller/tasks_controller.dart';
 import 'package:nex_task/model/enums/status.dart';
 import 'package:nex_task/model/models/task.dart';
+import 'package:nex_task/services/database/tasks_database.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/button_types.dart';
 import 'package:nex_task/utils/enums/text_form_field_input.dart';
@@ -27,6 +28,16 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
   TextEditingController taskStatusController = TextEditingController();
   List<String> categoriesList = [];
   bool newCategory = false;
+
+  @override
+  void initState() {
+    super.initState();
+    TasksDatabase.getCategories().then((value) {
+      setState(() {
+        categoriesList = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +70,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
                     ),
                     Row(
                       children: [
-                        Expanded(child: TaskCategoryDropDown(), flex: 3),
+                        Expanded(child: TaskCategoryDropDown(categoriesList: categoriesList,), flex: 3),
                         Expanded(
                           child: IconButton(
                             onPressed: () {
