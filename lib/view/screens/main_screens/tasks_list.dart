@@ -12,7 +12,35 @@ class TasksList extends StatefulWidget {
 }
 
 class _TasksListState extends State<TasksList> {
-  TasksListScreenState screenState = TasksListScreenState.list;
+  TasksListScreenState screenState = TasksListScreenState.loading;
+  List<Map<String, dynamic>> completeList = [];
+  List<TaskCard> toShowList = [];
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    TasksController.getTasks().then((value) {
+      setState(() {
+        completeList = value;
+        toShowList =
+            value
+                .map(
+                  (element) => TaskCard(
+                id: element["id"],
+                title: element["title"],
+                description: element["description"],
+                dueDate: element["due_date"],
+                category: element["category"],
+                status: element["status"],
+              ),
+            )
+                .toList();
+        screenState = TasksListScreenState.list;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,40 +50,25 @@ class _TasksListState extends State<TasksList> {
           screenState == TasksListScreenState.list
               ? Column(
                 children: [
-                  FutureBuilder<List<Map<String, dynamic>>>(
-                    future: TasksController.getTasks(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(color: Theme.of(context).primaryColor),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text("an error ocurred"));
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(child: Text("nothing to show"));
-                      } else {
-                        List<Map<String, dynamic>> tasks = snapshot.data!;
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: tasks.length,
-                            itemBuilder: (context, index) {
-                              return TaskCard(
-                                id: tasks[index]["id"],
-                                title: tasks[index]["title"],
-                                description: tasks[index]["description"],
-                                dueDate: tasks[index]["due_date"],
-                                category: tasks[index]["category"],
-                                status: tasks[index]["status"],
-                              );
-                            },
-                          ),
-                        );
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SearchBar(
+                      hintText: "search for a task",
+                      controller: controller,
+                      onChanged: (value) {
+                        setState(() {
+                          toShowList = newTaskList(completeList, value);
+                        });
+                      },
+                      leading: Icon(Icons.search),
+                    ),
                   ),
+                  Expanded(child: ListView(children: toShowList)),
                 ],
               )
-              : Center(child: CreateTaskModal()),
+              : screenState == TasksListScreenState.newTask
+              ? Center(child: CreateTaskModal())
+              : Center(child: CircularProgressIndicator(color: Colors.orange)),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         child:
@@ -72,4 +85,20 @@ class _TasksListState extends State<TasksList> {
       ),
     );
   }
+}
+
+List<TaskCard> newTaskList(List<Map<String, dynamic>> list, String query) {
+  return list
+      .where((element) => element["title"].toString().toLowerCase().contains(query.toLowerCase()))
+      .map(
+        (element) => TaskCard(
+          id: element["id"],
+          title: element["title"],
+          description: element["description"],
+          dueDate: element["due_date"],
+          category: element["category"],
+          status: element["status"],
+        ),
+      )
+      .toList();
 }
