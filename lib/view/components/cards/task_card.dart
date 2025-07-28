@@ -35,7 +35,14 @@ class TaskCard extends StatelessWidget {
                 child: Padding(padding: EdgeInsets.only(left: 12), child: Text(title!)),
               ),
               Expanded(child: Text("due to: $dueDate")),
-              Expanded(child: Icon(Icons.check_box)),
+              Expanded(
+                child:
+                    status == "to-do"
+                        ? Icon(Icons.hourglass_bottom)
+                        : status == "in_progress"
+                        ? Icon(Icons.sync)
+                        : Icon(Icons.check_box, color: Colors.green),
+              ),
             ],
           ),
         ),
