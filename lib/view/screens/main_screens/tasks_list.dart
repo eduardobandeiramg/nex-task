@@ -30,13 +30,14 @@ class _TasksListState extends State<TasksList> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text("an error ocurred"));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text("an error ocurred"));
+                    return Center(child: Text("nothing to show"));
                   } else {
                     List<Map<String, dynamic>> tasks = snapshot.data!;
                     return ListView.builder(
                       itemCount: tasks.length,
                       itemBuilder: (context, index) {
                         return TaskCard(
+                          id: tasks[index]["id"],
                           title: tasks[index]["title"],
                           description: tasks[index]["description"],
                           dueDate: tasks[index]["due_date"],

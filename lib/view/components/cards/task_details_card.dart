@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nex_task/utils/dimensions.dart';
-import 'package:nex_task/view/state_management/user_infos/user_infos.dart';
 
-class ProfileCard extends StatelessWidget {
+import '../../../utils/dimensions.dart';
+
+class TaskDetailsCard extends StatelessWidget {
   String title;
   String value;
-
-  ProfileCard({super.key, required this.title, required this.value});
+  TaskDetailsCard({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +19,9 @@ class ProfileCard extends StatelessWidget {
         height: Dimensions.height * 0.07,
         child: Row(children: [Padding(
           padding: const EdgeInsets.only(left: 20.0),
-          child: Text("$title: ${UserInfos.userEmail}"),
+          child: Text("$title: $value"),
         )],),
       ),
-    );
+    );;
   }
 }
