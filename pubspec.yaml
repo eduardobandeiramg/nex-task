@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.5.3
   flutter_bloc: ^9.1.1
   dropdown_search: ^6.0.2
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -62,10 +63,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/images/app_logo/app_logo.png
-    - lib/assets/images/task_standard_image/to_do_list.jpg
-    - lib/assets/images/profile_standard_image/israel_iz.png
-    - lib/assets/images/profile_standard_image/ukelele.png
+    - assets/images/app_logo/app_logo.png
+    - assets/images/task_standard_image/to_do_list.jpg
+    - assets/images/profile_standard_image/israel_iz.png
+    - assets/images/profile_standard_image/ukelele.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

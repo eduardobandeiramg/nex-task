@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nex_task/services/database/tasks_database.dart';
+import 'package:nex_task/services/storage/storage_service.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/button_types.dart';
 import 'package:nex_task/utils/enums/text_form_field_input.dart';
@@ -19,6 +22,7 @@ class TaskDetails extends StatefulWidget {
   String? dueDate;
   String? category;
   String? status;
+  bool hasImage;
 
   TaskDetails({
     super.key,
@@ -28,6 +32,7 @@ class TaskDetails extends StatefulWidget {
     required this.dueDate,
     required this.category,
     required this.status,
+    required this.hasImage,
   });
 
   @override
@@ -36,6 +41,7 @@ class TaskDetails extends StatefulWidget {
 
 class _TaskDetailsState extends State<TaskDetails> {
   List<String> categoriesList = [];
+  String? imageUrl;
 
   bool editingTitle = false;
   bool editingDescription = false;
@@ -44,19 +50,26 @@ class _TaskDetailsState extends State<TaskDetails> {
 
   TextEditingController taskTitleController = TextEditingController();
   TextEditingController taskDescriptionController = TextEditingController();
-
-  //TextEditingController taskCategoryController = TextEditingController();
   TextEditingController taskDueDateController = TextEditingController();
+
+  File? image;
+  final ImagePicker imagePicker = ImagePicker();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     TasksDatabase.getCategories().then((value) {
       setState(() {
         categoriesList = value;
       });
     });
+    if(widget.hasImage){
+      StorageService.getTaskImage(widget.id!).then((value){
+        setState(() {
+          imageUrl = value;
+        });
+      });
+    }
   }
 
   @override
@@ -73,10 +86,49 @@ class _TaskDetailsState extends State<TaskDetails> {
           Container(
             width: Dimensions.width,
             height: Dimensions.height * 0.22,
-            child: Image.asset(
-              "lib/assets/images/task_standard_image/to_do_list.jpg",
-              fit: BoxFit.cover,
-            ),
+            child:
+                imageUrl == "error" || imageUrl == null
+                    ? Image.asset(
+                      "assets/images/task_standard_image/to_do_list.jpg",
+                      fit: BoxFit.cover,
+                    )
+                    : Image.network(imageUrl!, fit: BoxFit.cover),
+          ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () async {
+                  final fileChosen = await imagePicker.pickImage(source: ImageSource.gallery);
+                  if (fileChosen != null) {
+                    setState(() {
+                      image = File(fileChosen.path);
+                    });
+                    try {
+                      await StorageService.addPhoto(File(fileChosen.path), widget.id!);
+                    } catch (e) {
+                      print("exception: $e");
+                    }
+                  }
+                },
+                icon: Icon(Icons.photo),
+              ),
+              IconButton(
+                onPressed: () async {
+                  final fileChosen = await imagePicker.pickImage(source: ImageSource.camera);
+                  if (fileChosen != null) {
+                    setState(() {
+                      image = File(fileChosen.path);
+                    });
+                    try {
+                      await StorageService.addPhoto(File(fileChosen.path), widget.id!);
+                    } catch (e) {
+                      print("exception: $e");
+                    }
+                  }
+                },
+                icon: Icon(Icons.camera_alt),
+              ),
+            ],
           ),
           SizedBox(height: Dimensions.height * 0.02),
           Expanded(

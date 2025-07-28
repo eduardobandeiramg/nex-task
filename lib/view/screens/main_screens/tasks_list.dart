@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nex_task/controller/tasks_controller.dart';
+import 'package:nex_task/services/storage/storage_service.dart';
 import 'package:nex_task/utils/enums/tasks_list_screen_state.dart';
 import 'package:nex_task/view/components/cards/task_card.dart';
 import 'package:nex_task/view/components/modals/create_task_modal.dart';
@@ -16,11 +17,17 @@ class _TasksListState extends State<TasksList> {
   List<Map<String, dynamic>> completeList = [];
   List<TaskCard> toShowList = [];
   TextEditingController controller = TextEditingController();
+  List<String> imageList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    StorageService.getTasksImages().then((value) {
+      imageList = value;
+    });
+
     TasksController.getTasks().then((value) {
       setState(() {
         completeList = value;
@@ -28,14 +35,15 @@ class _TasksListState extends State<TasksList> {
             value
                 .map(
                   (element) => TaskCard(
-                id: element["id"],
-                title: element["title"],
-                description: element["description"],
-                dueDate: element["due_date"],
-                category: element["category"],
-                status: element["status"],
-              ),
-            )
+                    id: element["id"],
+                    title: element["title"],
+                    description: element["description"],
+                    dueDate: element["due_date"],
+                    category: element["category"],
+                    status: element["status"],
+                    hasImage: imageList.contains(element["id"]),
+                  ),
+                )
                 .toList();
         screenState = TasksListScreenState.list;
       });
@@ -98,6 +106,7 @@ List<TaskCard> newTaskList(List<Map<String, dynamic>> list, String query) {
           dueDate: element["due_date"],
           category: element["category"],
           status: element["status"],
+          hasImage: list.contains(element["id"]),
         ),
       )
       .toList();

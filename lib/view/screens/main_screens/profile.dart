@@ -14,7 +14,7 @@ class Profile extends StatelessWidget {
           SizedBox(height: Dimensions.height * 0.02),
           CircleAvatar(
             radius: Dimensions.width * 0.25,
-            backgroundImage: AssetImage("lib/assets/images/profile_standard_image/ukelele.png"),
+            backgroundImage: AssetImage("assets/images/profile_standard_image/ukelele.png"),
           ),
           SizedBox(height: Dimensions.height * 0.05),
           ProfileCard(title: "e-mail", value: "value"),

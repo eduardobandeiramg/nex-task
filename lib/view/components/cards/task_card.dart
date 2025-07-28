@@ -9,6 +9,7 @@ class TaskCard extends StatelessWidget {
   String? dueDate;
   String? category;
   String? status;
+  bool hasImage;
 
   TaskCard({
     super.key,
@@ -18,6 +19,7 @@ class TaskCard extends StatelessWidget {
     required this.dueDate,
     required this.category,
     required this.status,
+    required this.hasImage
   });
 
   @override
@@ -34,6 +36,7 @@ class TaskCard extends StatelessWidget {
                 dueDate: dueDate,
                 category: category,
                 status: status,
+                hasImage: hasImage,
               );
             },
           ),
@@ -57,7 +60,7 @@ class TaskCard extends StatelessWidget {
               Expanded(
                 child:
                     status == "to_do"
-                        ? Icon(Icons.hourglass_top_outlined)
+                        ? Icon(Icons.pending_actions)
                         : status == "in_progress"
                         ? Icon(Icons.sync)
                         : Icon(Icons.check_box, color: Colors.green),
