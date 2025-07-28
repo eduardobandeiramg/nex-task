@@ -3,6 +3,7 @@ import 'package:nex_task/controller/user_controller.dart';
 import 'package:nex_task/utils/app_color.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/button_types.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class StandardButton extends StatelessWidget {
   ButtonTypes buttonTypes;
@@ -36,13 +37,19 @@ class StandardButton extends StatelessWidget {
               onPressed!();
             }
             if (buttonTypes == ButtonTypes.login) {
-              await UserController().login(email, password1);
+              try {
+                await UserController().login(email, password1);
+              } on AuthApiException catch (e) {
+                if (e.message.contains("Invalid login credentials")) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text("invalid credentials!")));
+                }
+              } catch (e) {}
             } else if (buttonTypes == ButtonTypes.createAccount) {
               await UserController().createUser(email, password1, password2);
               Navigator.pop(contextFromRegisterScreen!);
-            }  else{
-
-            }
+            } else {}
           },
           child: Text(buttonText(buttonTypes), style: TextStyle(color: Colors.white)),
           style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primary)),
