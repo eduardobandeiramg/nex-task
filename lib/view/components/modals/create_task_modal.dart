@@ -104,7 +104,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
                               title: taskTitleController.text,
                               description: taskDescriptionController.text,
                               dueDate: taskDueDateController.text,
-                              category: category,
+                              category: category.toLowerCase(),
                               status: TaskStatus.toDo,
                             );
                             // checks if user added a new category:
@@ -121,9 +121,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
                               MaterialPageRoute(builder: (context) => NavigationScreen()),
                             );
                           }
-                          print("validado");
                         } else {
-                          print("nao validado");
                         }
                       },
                     ),

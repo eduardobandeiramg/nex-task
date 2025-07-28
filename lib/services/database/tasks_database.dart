@@ -20,7 +20,9 @@ class TasksDatabase {
     List<String> categoriesList = [];
     List<Map<String, dynamic>> tasksList = await TasksDatabase.getTasks();
     for (var task in tasksList) {
-      categoriesList.add(task["category"]);
+      if (!categoriesList.contains(task["category"])) {
+        categoriesList.add(task["category"]);
+      }
     }
     return categoriesList;
   }
@@ -31,5 +33,9 @@ class TasksDatabase {
 
   static Future<void> updateTaskStatus(String id, newStatus) async {
     await Supabase.instance.client.from("tasks").update({"status": newStatus}).eq("id", id);
+  }
+
+  static Future<void> updateTask(String id, Map<String, dynamic> map) async {
+    await Supabase.instance.client.from("tasks").update(map).eq("id", id);
   }
 }

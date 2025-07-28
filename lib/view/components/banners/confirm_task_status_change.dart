@@ -8,7 +8,10 @@ AlertDialog buildConfirmTaskStatusChangeBanner({
   required String newStatus,
 }) {
   return AlertDialog(
-    title: Text("Confirm task status update?"),
+    title:
+        newStatus == "in_progress"
+            ? Text("Confirm start of task execution?")
+            : Text("Confirm task completion?"),
     content:
         newStatus == "in_progress"
             ? Text("this task's state will be updated to 'in progress'")

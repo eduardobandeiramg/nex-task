@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/text_form_field_input.dart';
 
-class StandardTextFormField extends StatefulWidget {
+class UpdatingTaskField extends StatefulWidget {
   TextFormFieldInput textFormFieldInput;
   TextEditingController controller;
 
-  StandardTextFormField({
-    super.key,
-    required this.textFormFieldInput,
-    required this.controller,
-  });
+  UpdatingTaskField({super.key, required this.textFormFieldInput, required this.controller});
 
   @override
-  State<StandardTextFormField> createState() => _StandardTextFormFieldState();
+  State<UpdatingTaskField> createState() => _UpdatingTaskFieldState();
 }
 
-class _StandardTextFormFieldState extends State<StandardTextFormField> {
+class _UpdatingTaskFieldState extends State<UpdatingTaskField> {
   // method for returning the date picker:
   Future<void> _selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -36,6 +33,7 @@ class _StandardTextFormFieldState extends State<StandardTextFormField> {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Container(
+        height: Dimensions.height * 0.07,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
         child: TextFormField(
           validator: (value) {
@@ -91,13 +89,13 @@ String textFormFieldText(TextFormFieldInput textFormFieldInput) {
     case TextFormFieldInput.confirmPassword:
       return "confirm password";
     case TextFormFieldInput.taskTitle:
-      return "title";
+      return "new title";
     case TextFormFieldInput.taskDescription:
-      return "description";
+      return "new description";
     case TextFormFieldInput.newCategory:
       return "enter new category";
     case TextFormFieldInput.taskDueDate:
-      return "due to:";
+      return "new deadline:";
     default:
       return "not-detected text form field";
   }

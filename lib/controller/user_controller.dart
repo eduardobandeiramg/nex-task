@@ -1,5 +1,4 @@
 import 'package:nex_task/services/auth/auth_service.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserController {
   AuthService authService = AuthService();
@@ -16,8 +15,6 @@ class UserController {
           checkNumericalChars(password1)) {
         Map<String, dynamic> response = await authService.createUser(email, password1);
         if (response["session"] != null && response["user"] != null) {
-          // TODO: REMOVE THIS PRINT
-          print("RESPOSTA AO CRIAR USUARIO: $response");
           return response;
         } else {
           return {"session": "error", "user": "error"};

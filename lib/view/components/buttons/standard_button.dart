@@ -10,6 +10,7 @@ class StandardButton extends StatelessWidget {
   String? password1;
   String? password2;
   VoidCallback? onPressed;
+  double? dimensions;
 
   StandardButton({
     super.key,
@@ -18,6 +19,7 @@ class StandardButton extends StatelessWidget {
     this.password1,
     this.password2,
     this.onPressed,
+    this.dimensions,
   });
 
   @override
@@ -25,7 +27,7 @@ class StandardButton extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        width: Dimensions.width * 0.5,
+        width: dimensions != null ? dimensions : Dimensions.width * 0.5,
         child: ElevatedButton(
           onPressed: () async {
             if (onPressed != null) {
@@ -55,5 +57,7 @@ String buttonText(ButtonTypes buttonType) {
       return "create account";
     case ButtonTypes.createTask:
       return "create task";
+    case ButtonTypes.editTask:
+      return "update task information";
   }
 }

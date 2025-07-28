@@ -63,6 +63,7 @@ flutter:
 
   assets:
     - lib/assets/images/app_logo/app_logo.png
+    - lib/assets/images/task_standard_image/to_do_list.jpg
     - lib/assets/images/profile_standard_image/israel_iz.png
     - lib/assets/images/profile_standard_image/ukelele.png
 
