@@ -63,8 +63,8 @@ class _TaskDetailsState extends State<TaskDetails> {
         categoriesList = value;
       });
     });
-    if(widget.hasImage){
-      StorageService.getTaskImage(widget.id!).then((value){
+    if (widget.hasImage) {
+      StorageService.getTaskImage(widget.id!).then((value) {
         setState(() {
           imageUrl = value;
         });
@@ -243,6 +243,23 @@ class _TaskDetailsState extends State<TaskDetails> {
                       ),
                       flex: 1,
                     ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 9,
+                      child: TaskDetailsCard(
+                        title: "Status",
+                        value:
+                            widget.status! == "to-do"
+                                ? "to do"
+                                : widget.status! == "in_progress"
+                                ? "in progress"
+                                : "done",
+                      ),
+                    ),
+                    Expanded(child: SizedBox(), flex: 1),
                   ],
                 ),
                 SizedBox(height: Dimensions.height * 0.07),
