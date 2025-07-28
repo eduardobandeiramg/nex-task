@@ -48,7 +48,7 @@ class _LoginState extends State<Login> {
                 child: Text("sign-up", style: TextStyle(color: Theme.of(context).primaryColor)),
               ),
               SizedBox(height: Dimensions.height * 0.1),
-              StandardButton(buttonTypes: ButtonTypes.login, email: emailController.text, password1: passwordController.text,),
+              StandardButton(buttonTypes: ButtonTypes.login, email: emailController, password1: passwordController,),
             ],
           ),
         ),

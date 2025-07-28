@@ -7,12 +7,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class StandardButton extends StatelessWidget {
   ButtonTypes buttonTypes;
-  String? email;
-  String? password1;
-  String? password2;
+  TextEditingController? email;
+  TextEditingController? password1;
+  TextEditingController? password2;
   VoidCallback? onPressed;
   double? dimensions;
   BuildContext? contextFromRegisterScreen;
+  GlobalKey<FormState>? formKey;
 
   StandardButton({
     super.key,
@@ -23,6 +24,7 @@ class StandardButton extends StatelessWidget {
     this.onPressed,
     this.dimensions,
     this.contextFromRegisterScreen,
+    this.formKey,
   });
 
   @override
@@ -38,7 +40,7 @@ class StandardButton extends StatelessWidget {
             }
             if (buttonTypes == ButtonTypes.login) {
               try {
-                await UserController().login(email, password1);
+                await UserController().login(email!.text, password1!.text);
               } on AuthApiException catch (e) {
                 if (e.message.contains("Invalid login credentials")) {
                   ScaffoldMessenger.of(
@@ -47,9 +49,26 @@ class StandardButton extends StatelessWidget {
                 }
               } catch (e) {}
             } else if (buttonTypes == ButtonTypes.createAccount) {
-              await UserController().createUser(email, password1, password2);
-              Navigator.pop(contextFromRegisterScreen!);
-            } else {}
+              print("PASSWORD1: ${password1!.text}");
+              print("PASSWORD2: ${password2!.text}");
+              print("PASSWORD1 == PASSWORD2: ${password1 == password2}");
+              if (formKey != null) {
+                if (formKey!.currentState!.validate()) {
+                  if (password1!.text != password2!.text) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text("both passwords must be identical")));
+                  } else {
+                    await UserController().createUser(
+                      email!.text,
+                      password1!.text,
+                      password2!.text,
+                    );
+                    Navigator.pop(contextFromRegisterScreen!);
+                  }
+                }
+              }
+            }
           },
           child: Text(buttonText(buttonTypes), style: TextStyle(color: Colors.white)),
           style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primary)),

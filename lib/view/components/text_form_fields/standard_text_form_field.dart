@@ -5,11 +5,7 @@ class StandardTextFormField extends StatefulWidget {
   TextFormFieldInput textFormFieldInput;
   TextEditingController controller;
 
-  StandardTextFormField({
-    super.key,
-    required this.textFormFieldInput,
-    required this.controller,
-  });
+  StandardTextFormField({super.key, required this.textFormFieldInput, required this.controller});
 
   @override
   State<StandardTextFormField> createState() => _StandardTextFormFieldState();
@@ -56,6 +52,36 @@ class _StandardTextFormFieldState extends State<StandardTextFormField> {
                 return "enter a valid due date for the task";
               } else {
                 return null;
+              }
+            } else if (widget.textFormFieldInput == TextFormFieldInput.email) {
+              if (value!.isEmpty) {
+                return "field must be not null";
+              } else if (!RegExp(
+                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+              ).hasMatch(value)) {
+                return 'enter a valid email';
+              } else {
+                return null;
+              }
+            } else if (widget.textFormFieldInput == TextFormFieldInput.password) {
+              if (value!.length < 8) {
+                return 'your password must have at least 8 characters';
+              } else if (!RegExp(r'[0-9]').hasMatch(value)) {
+                return 'your password must contain at least a number';
+              } else if (!RegExp('[A-Z]').hasMatch(value)) {
+                return 'your password must contain at least one upper case character';
+              } else if (!RegExp('[a-z]').hasMatch(value)) {
+                return 'your password must contain at least one lower case character';
+              }
+            } else if (widget.textFormFieldInput == TextFormFieldInput.confirmPassword) {
+              if (value!.length < 8) {
+                return 'your password must have at least 8 characters';
+              } else if (!RegExp(r'[0-9]').hasMatch(value)) {
+                return 'your password must contain at least a number';
+              } else if (!RegExp('[A-Z]').hasMatch(value)) {
+                return 'your password must contain at least one upper case character';
+              } else if (!RegExp('[a-z]').hasMatch(value)) {
+                return 'your password must contain at least one lower case character';
               }
             }
           },

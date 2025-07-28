@@ -13,6 +13,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final registerFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController password1Controller = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
@@ -23,6 +24,7 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(iconTheme: IconThemeData(color: Theme.of(context).primaryColor)),
       body: SingleChildScrollView(
         child: Form(
+          key: registerFormKey,
           child: Column(
             children: [
               //SizedBox(height: Dimensions.height * 0.1),
@@ -48,11 +50,12 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: Dimensions.height * 0.1),
               StandardButton(
+                formKey: registerFormKey,
                 contextFromRegisterScreen: context,
                 buttonTypes: ButtonTypes.createAccount,
-                email: emailController.text,
-                password1: password1Controller.text,
-                password2: password2Controller.text,
+                email: emailController,
+                password1: password1Controller,
+                password2: password2Controller,
               ),
             ],
           ),
