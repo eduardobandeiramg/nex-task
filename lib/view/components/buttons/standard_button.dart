@@ -11,6 +11,7 @@ class StandardButton extends StatelessWidget {
   String? password2;
   VoidCallback? onPressed;
   double? dimensions;
+  BuildContext? contextFromRegisterScreen;
 
   StandardButton({
     super.key,
@@ -20,6 +21,7 @@ class StandardButton extends StatelessWidget {
     this.password2,
     this.onPressed,
     this.dimensions,
+    this.contextFromRegisterScreen,
   });
 
   @override
@@ -37,6 +39,10 @@ class StandardButton extends StatelessWidget {
               await UserController().login(email, password1);
             } else if (buttonTypes == ButtonTypes.createAccount) {
               await UserController().createUser(email, password1, password2);
+              Navigator.pop(contextFromRegisterScreen!);
+              /*              if(){
+                await UserController().login(email, password1);
+              }*/
             } else if (buttonTypes == ButtonTypes.createTask) {
               ///TODO: CRIAR TAREFA
             } else {}

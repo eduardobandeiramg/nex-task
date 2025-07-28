@@ -8,6 +8,10 @@ class AuthGate extends Cubit<AuthenticationState> {
 
   AuthGate() : super(AuthenticationState.loggedOut) {
     _listenToAuthEvents();
+    final session = supabaseClient.auth.currentSession;
+    if (session != null) {
+      emit(AuthenticationState.loggedIn);
+    }
   }
 
   void _listenToAuthEvents() {
@@ -15,7 +19,9 @@ class AuthGate extends Cubit<AuthenticationState> {
       final AuthChangeEvent event = data.event;
       final Session? session = data.session;
       switch (event) {
-        case AuthChangeEvent.signedIn || AuthChangeEvent.initialSession:
+        case AuthChangeEvent.signedIn:
+          emit(AuthenticationState.loggedIn);
+        case AuthChangeEvent.initialSession:
           emit(AuthenticationState.loggedIn);
         case AuthChangeEvent.signedOut:
           emit(AuthenticationState.loggedOut);

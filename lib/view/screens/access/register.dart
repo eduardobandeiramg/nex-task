@@ -48,6 +48,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: Dimensions.height * 0.1),
               StandardButton(
+                contextFromRegisterScreen: context,
                 buttonTypes: ButtonTypes.createAccount,
                 email: emailController.text,
                 password1: password1Controller.text,
