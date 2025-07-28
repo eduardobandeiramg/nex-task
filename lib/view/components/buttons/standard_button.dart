@@ -40,12 +40,9 @@ class StandardButton extends StatelessWidget {
             } else if (buttonTypes == ButtonTypes.createAccount) {
               await UserController().createUser(email, password1, password2);
               Navigator.pop(contextFromRegisterScreen!);
-              /*              if(){
-                await UserController().login(email, password1);
-              }*/
-            } else if (buttonTypes == ButtonTypes.createTask) {
-              ///TODO: CRIAR TAREFA
-            } else {}
+            }  else{
+
+            }
           },
           child: Text(buttonText(buttonTypes), style: TextStyle(color: Colors.white)),
           style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primary)),

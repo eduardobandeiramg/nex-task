@@ -1,3 +1,3 @@
 class SupabaseClientStorage{
-  static late var supabaseClient;
+  static var supabaseClient;
 }

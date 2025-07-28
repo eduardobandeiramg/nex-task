@@ -20,34 +20,40 @@ class _TasksListState extends State<TasksList> {
     return Scaffold(
       body:
           screenState == TasksListScreenState.list
-              ? FutureBuilder<List<Map<String, dynamic>>>(
-                future: TasksController.getTasks(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(color: Theme.of(context).primaryColor),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text("an error ocurred"));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text("nothing to show"));
-                  } else {
-                    List<Map<String, dynamic>> tasks = snapshot.data!;
-                    return ListView.builder(
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        return TaskCard(
-                          id: tasks[index]["id"],
-                          title: tasks[index]["title"],
-                          description: tasks[index]["description"],
-                          dueDate: tasks[index]["due_date"],
-                          category: tasks[index]["category"],
-                          status: tasks[index]["status"],
+              ? Column(
+                children: [
+                  FutureBuilder<List<Map<String, dynamic>>>(
+                    future: TasksController.getTasks(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(color: Theme.of(context).primaryColor),
                         );
-                      },
-                    );
-                  }
-                },
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text("an error ocurred"));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return Center(child: Text("nothing to show"));
+                      } else {
+                        List<Map<String, dynamic>> tasks = snapshot.data!;
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: tasks.length,
+                            itemBuilder: (context, index) {
+                              return TaskCard(
+                                id: tasks[index]["id"],
+                                title: tasks[index]["title"],
+                                description: tasks[index]["description"],
+                                dueDate: tasks[index]["due_date"],
+                                category: tasks[index]["category"],
+                                status: tasks[index]["status"],
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
               )
               : Center(child: CreateTaskModal()),
       floatingActionButton: FloatingActionButton(

@@ -1,4 +1,4 @@
 class UserInfos{
-  static late var userID;
-  static late String userEmail;
+  static var userID;
+  static var userEmail;
 }
