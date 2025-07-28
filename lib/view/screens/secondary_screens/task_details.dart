@@ -10,7 +10,7 @@ import 'package:nex_task/view/components/banners/confirm_task_deletion_banner.da
 import 'package:nex_task/view/components/banners/confirm_task_status_change.dart';
 import 'package:nex_task/view/components/buttons/standard_button.dart';
 import 'package:nex_task/view/components/cards/task_details_card.dart';
-import 'package:nex_task/view/components/text_form_fields/standard_text_form_field_smaller.dart';
+import 'package:nex_task/view/components/text_form_fields/updating_task_field.dart';
 import 'package:nex_task/view/screens/navigation_screen/navigation_screen.dart';
 import 'package:nex_task/view/state_management/new_task_form_state/category_selection_state.dart';
 import '../../components/text_form_fields/task_category_drop_down.dart';

@@ -7,6 +7,7 @@ import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/button_types.dart';
 import 'package:nex_task/utils/enums/text_form_field_input.dart';
 import 'package:nex_task/view/components/buttons/standard_button.dart';
+import 'package:nex_task/view/components/text_form_fields/smaller_standard_text_form_field.dart';
 import 'package:nex_task/view/components/text_form_fields/standard_text_form_field.dart';
 import 'package:nex_task/view/components/text_form_fields/task_category_drop_down.dart';
 import 'package:nex_task/view/screens/navigation_screen/navigation_screen.dart';
@@ -56,21 +57,24 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
               Expanded(
                 child: ListView(
                   children: [
-                    StandardTextFormField(
+                    SmallerStandardTextFormField(
                       textFormFieldInput: TextFormFieldInput.taskTitle,
                       controller: taskTitleController,
                     ),
-                    StandardTextFormField(
+                    SmallerStandardTextFormField(
                       textFormFieldInput: TextFormFieldInput.taskDescription,
                       controller: taskDescriptionController,
                     ),
-                    StandardTextFormField(
+                    SmallerStandardTextFormField(
                       textFormFieldInput: TextFormFieldInput.taskDueDate,
                       controller: taskDueDateController,
                     ),
                     Row(
                       children: [
-                        Expanded(child: TaskCategoryDropDown(categoriesList: categoriesList,), flex: 3),
+                        Expanded(
+                          child: TaskCategoryDropDown(categoriesList: categoriesList),
+                          flex: 3,
+                        ),
                         Expanded(
                           child: IconButton(
                             onPressed: () {
@@ -84,7 +88,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
                       ],
                     ),
                     if (newCategory)
-                      StandardTextFormField(
+                      SmallerStandardTextFormField(
                         textFormFieldInput: TextFormFieldInput.newCategory,
                         controller: taskNewCategoryController,
                       ),
@@ -121,8 +125,7 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
                               MaterialPageRoute(builder: (context) => NavigationScreen()),
                             );
                           }
-                        } else {
-                        }
+                        } else {}
                       },
                     ),
                   ],
