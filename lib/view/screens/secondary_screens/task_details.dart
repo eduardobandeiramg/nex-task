@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nex_task/services/database/tasks_database.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/view/components/banners/confirm_task_deletion_banner.dart';
 import 'package:nex_task/view/components/banners/confirm_task_status_change.dart';
-import 'package:nex_task/view/components/cards/profile_card.dart';
 import 'package:nex_task/view/components/cards/task_details_card.dart';
 
 class TaskDetails extends StatefulWidget {
