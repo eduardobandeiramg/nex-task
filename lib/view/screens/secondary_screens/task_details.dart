@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nex_task/services/database/tasks_database.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/view/components/banners/confirm_task_deletion_banner.dart';
+import 'package:nex_task/view/components/banners/confirm_task_status_change.dart';
 import 'package:nex_task/view/components/cards/profile_card.dart';
 import 'package:nex_task/view/components/cards/task_details_card.dart';
 
@@ -56,7 +57,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                 Expanded(
                   flex: 2,
                   child: IconButton(
-                    onPressed: () async {
+                    onPressed: () {
                       showDialog(
                         context: context,
                         builder:
@@ -73,7 +74,17 @@ class _TaskDetailsState extends State<TaskDetails> {
                   Expanded(
                     flex: 2,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder:
+                              (context) => buildConfirmTaskStatusChangeBanner(
+                                taskId: widget.id!,
+                                context: context,
+                                newStatus: "in_progress",
+                              ),
+                        );
+                      },
                       icon: Icon(
                         Icons.play_circle,
                         color: Colors.blue,
@@ -85,7 +96,17 @@ class _TaskDetailsState extends State<TaskDetails> {
                   Expanded(
                     flex: 2,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder:
+                              (context) => buildConfirmTaskStatusChangeBanner(
+                                taskId: widget.id!,
+                                context: context,
+                                newStatus: "done",
+                              ),
+                        );
+                      },
                       icon: Icon(
                         Icons.check_box,
                         color: Colors.green,

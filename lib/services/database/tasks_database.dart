@@ -3,7 +3,7 @@ import '../../model/models/task.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TasksDatabase {
-  static Future<Map<String, String>> createTask(Task task) async {
+  static Future<void> createTask(Task task) async {
     var response = await Supabase.instance.client.from("tasks").insert(task.toMap());
     return response;
   }
@@ -27,5 +27,9 @@ class TasksDatabase {
 
   static Future<void> deleteTask(String id) async {
     await Supabase.instance.client.from("tasks").delete().eq("id", id);
+  }
+
+  static Future<void> updateTaskStatus(String id, newStatus) async {
+    await Supabase.instance.client.from("tasks").update({"status": newStatus}).eq("id", id);
   }
 }

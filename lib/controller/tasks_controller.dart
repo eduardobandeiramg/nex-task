@@ -3,8 +3,7 @@ import 'package:nex_task/services/database/tasks_database.dart';
 
 class TasksController {
   static createTask(Task task) async {
-    var response = await TasksDatabase.createTask(task);
-    print("RESPONSE: $response");
+    await TasksDatabase.createTask(task);
   }
 
   static Future<List<Map<String, dynamic>>> getTasks() async {

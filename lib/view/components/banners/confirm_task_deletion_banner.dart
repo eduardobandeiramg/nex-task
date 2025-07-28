@@ -8,12 +8,13 @@ AlertDialog buildConfirmTaskDeletionBanner({
 }) {
   return AlertDialog(
     title: Text("Confirm task deletion?"),
+    content: Text("this action cannot be undone"),
     actions: [
       TextButton(
         onPressed: () {
-          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+          Navigator.of(context).pop();
         },
-        child: Text("Cancel"),
+        child: Text("cancel"),
       ),
       TextButton(
         onPressed: () async {
@@ -22,45 +23,8 @@ AlertDialog buildConfirmTaskDeletionBanner({
             context,
           ).pushReplacement(MaterialPageRoute(builder: (context) => NavigationScreen()));
         },
-        child: Text("Confirm"),
+        child: Text("confirm"),
       ),
     ],
   );
 }
-
-/*
-import 'package:flutter/material.dart';
-import 'package:nex_task/services/database/tasks_database.dart';
-import 'package:nex_task/view/screens/navigation_screen/navigation_screen.dart';
-
-class ConfirmTaskDeletionBanner extends StatelessWidget{
-  String taskId;
-  BuildContext context;
-
-  ConfirmTaskDeletionBanner({super.key, required this.taskId, required this.context});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialBanner(
-      content: Text("confirm event deletion?"),
-      actions: [
-        TextButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-          },
-          child: Text("cancel"),
-        ),
-        TextButton(
-          onPressed: () async {
-            await TasksDatabase.deleteTask(taskId);
-            Navigator.of(
-              context,
-            ).pushReplacement(MaterialPageRoute(builder: (context) => NavigationScreen()));
-          },
-          child: Text("confirm"),
-        ),
-      ],
-    );
-  }
-}
-*/

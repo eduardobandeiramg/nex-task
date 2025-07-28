@@ -116,9 +116,6 @@ class _CreateTaskModalState extends State<CreateTaskModal> {
                             }
                             CategorySelectionState.category = null;
                             await TasksController.createTask(newTask);
-                            if (newCategory != null) {
-                              ///TODO: ADD CATEGORY TO THE DATABASE
-                            }
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => NavigationScreen()),
