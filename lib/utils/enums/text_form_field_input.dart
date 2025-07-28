@@ -1,5 +1,11 @@
 enum TextFormFieldInput{
   email,
   password,
-  confirmPassword
+  confirmPassword,
+  taskTitle,
+  taskDescription,
+  newCategory,
+  taskDueDate,
+  taskCategory,
+  taskStatus
 }

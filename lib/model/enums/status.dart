@@ -1,4 +1,4 @@
-enum Status{
+enum TaskStatus{
   toDo,
   inProgress,
   done

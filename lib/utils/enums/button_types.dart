@@ -1,4 +1,5 @@
 enum ButtonTypes{
   createAccount,
-  login
+  login,
+  createTask,
 }

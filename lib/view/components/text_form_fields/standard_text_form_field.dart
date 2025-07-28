@@ -12,6 +12,21 @@ class StandardTextFormField extends StatefulWidget {
 }
 
 class _StandardTextFormFieldState extends State<StandardTextFormField> {
+  // method for returning the date picker:
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        widget.controller.text = "${picked.day}/${picked.month}/${picked.year}";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,8 +34,32 @@ class _StandardTextFormFieldState extends State<StandardTextFormField> {
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
         child: TextFormField(
-          onChanged: (value) {
-            print("NOVO VALOR: $value");
+          validator: (value) {
+            if (widget.textFormFieldInput == TextFormFieldInput.taskTitle) {
+              if (value!.isEmpty) {
+                return "enter a valid title for the task";
+              } else {
+                return null;
+              }
+            } else if (widget.textFormFieldInput == TextFormFieldInput.taskDescription) {
+              if (value!.isEmpty) {
+                return "enter a valid description for the task";
+              } else {
+                return null;
+              }
+            } else if (widget.textFormFieldInput == TextFormFieldInput.taskDueDate) {
+              if (value!.isEmpty) {
+                return "enter a valid due date for the task";
+              } else {
+                return null;
+              }
+            }
+          },
+          readOnly: widget.textFormFieldInput == TextFormFieldInput.taskDueDate,
+          onTap: () async {
+            if (widget.textFormFieldInput == TextFormFieldInput.taskDueDate) {
+              return _selectDate(context);
+            }
           },
           controller: widget.controller,
           obscureText:
@@ -43,12 +82,19 @@ String textFormFieldText(TextFormFieldInput textFormFieldInput) {
   switch (textFormFieldInput) {
     case TextFormFieldInput.email:
       return "email";
-      break;
     case TextFormFieldInput.password:
       return "password";
-      break;
     case TextFormFieldInput.confirmPassword:
       return "confirm password";
-      break;
+    case TextFormFieldInput.taskTitle:
+      return "title";
+    case TextFormFieldInput.taskDescription:
+      return "description";
+    case TextFormFieldInput.newCategory:
+      return "enter new category";
+    case TextFormFieldInput.taskDueDate:
+      return "due to:";
+    default:
+      return "not-detected text form field";
   }
 }

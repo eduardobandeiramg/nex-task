@@ -8,11 +8,16 @@ import 'package:nex_task/view/screens/access/login.dart';
 import 'package:nex_task/view/screens/navigation_screen/navigation_screen.dart';
 import 'package:nex_task/view/state_management/auth_gate/auth_gate.dart';
 import 'package:nex_task/view/state_management/supabase_client_storage.dart';
+import 'package:nex_task/view/state_management/user_infos/user_infos.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
-  SupabaseClientStorage.supabaseClient = Supabase.instance.client;
+  var clientInstance = Supabase.instance.client;
+  SupabaseClientStorage.supabaseClient = clientInstance;
+  var userIdentity = await clientInstance.auth.getUserIdentities();
+  UserInfos.userID = userIdentity[0].id;
+  UserInfos.userEmail = userIdentity[0].identityData!["email"];
   runApp(const MyApp());
 }
 

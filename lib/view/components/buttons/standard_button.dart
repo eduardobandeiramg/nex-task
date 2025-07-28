@@ -3,33 +3,45 @@ import 'package:nex_task/controller/user_controller.dart';
 import 'package:nex_task/utils/app_color.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/button_types.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class StandardButton extends StatelessWidget {
   ButtonTypes buttonTypes;
   String? email;
   String? password1;
   String? password2;
+  VoidCallback? onPressed;
 
-  StandardButton({super.key, required this.buttonTypes, this.email, this.password1, this.password2});
+  StandardButton({
+    super.key,
+    required this.buttonTypes,
+    this.email,
+    this.password1,
+    this.password2,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: Dimensions.width * 0.5,
-      child: ElevatedButton(
-        onPressed: () async {
-          if(buttonTypes == ButtonTypes.login){
-            await UserController().login(email, password1);
-          }
-          else if(buttonTypes == ButtonTypes.createAccount){
-            await UserController().createUser(email, password1, password2);
-          }else{
-
-          }
-        },
-        child: Text(buttonText(buttonTypes), style: TextStyle(color: Colors.white)),
-        style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primary)),
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        width: Dimensions.width * 0.5,
+        child: ElevatedButton(
+          onPressed: () async {
+            if (onPressed != null) {
+              onPressed!();
+            }
+            if (buttonTypes == ButtonTypes.login) {
+              await UserController().login(email, password1);
+            } else if (buttonTypes == ButtonTypes.createAccount) {
+              await UserController().createUser(email, password1, password2);
+            } else if (buttonTypes == ButtonTypes.createTask) {
+              ///TODO: CRIAR TAREFA
+            } else {}
+          },
+          child: Text(buttonText(buttonTypes), style: TextStyle(color: Colors.white)),
+          style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primary)),
+        ),
       ),
     );
   }
@@ -39,9 +51,9 @@ String buttonText(ButtonTypes buttonType) {
   switch (buttonType) {
     case ButtonTypes.login:
       return "login";
-      break;
     case ButtonTypes.createAccount:
       return "create account";
-      break;
+    case ButtonTypes.createTask:
+      return "create task";
   }
 }
