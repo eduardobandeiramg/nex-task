@@ -19,37 +19,56 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-          child: Column(
-            children: [
-              SizedBox(height: Dimensions.height * 0.1),
-              Padding(
-                padding: EdgeInsets.all(12),
-                child: Text(
-                  "Log-in",
-                  style: TextStyle(fontSize: Dimensions.height * 0.04, fontWeight: FontWeight.bold),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        image: DecorationImage(
+          alignment: Alignment.bottomCenter,
+          //fit: BoxFit.cover,
+          image: AssetImage("assets/images/app_logo/app_logo.png"),
+        ),
+      ),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.transparent,
+        body: SingleChildScrollView(
+          child: Form(
+            child: Column(
+              children: [
+                SizedBox(height: Dimensions.height * 0.1),
+                Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Text(
+                    "Log-in",
+                    style: TextStyle(
+                      fontSize: Dimensions.height * 0.04,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(height: Dimensions.height * 0.1),
-              StandardTextFormField(
-                textFormFieldInput: TextFormFieldInput.email,
-                controller: emailController,
-              ),
-              StandardTextFormField(
-                textFormFieldInput: TextFormFieldInput.password,
-                controller: passwordController,
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register()));
-                },
-                child: Text("sign-up", style: TextStyle(color: Theme.of(context).primaryColor)),
-              ),
-              SizedBox(height: Dimensions.height * 0.1),
-              StandardButton(buttonTypes: ButtonTypes.login, email: emailController, password1: passwordController,),
-            ],
+                SizedBox(height: Dimensions.height * 0.1),
+                StandardTextFormField(
+                  textFormFieldInput: TextFormFieldInput.email,
+                  controller: emailController,
+                ),
+                StandardTextFormField(
+                  textFormFieldInput: TextFormFieldInput.password,
+                  controller: passwordController,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register()));
+                  },
+                  child: Text("sign-up", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 15)),
+                ),
+                SizedBox(height: Dimensions.height * 0.1),
+                StandardButton(
+                  buttonTypes: ButtonTypes.login,
+                  email: emailController,
+                  password1: passwordController,
+                ),
+              ],
+            ),
           ),
         ),
       ),

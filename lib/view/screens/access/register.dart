@@ -20,44 +20,59 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(iconTheme: IconThemeData(color: Theme.of(context).primaryColor)),
-      body: SingleChildScrollView(
-        child: Form(
-          key: registerFormKey,
-          child: Column(
-            children: [
-              //SizedBox(height: Dimensions.height * 0.1),
-              Padding(
-                padding: EdgeInsets.all(12),
-                child: Text(
-                  "Create an account",
-                  style: TextStyle(fontSize: Dimensions.height * 0.04, fontWeight: FontWeight.bold),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        image: DecorationImage(
+          alignment: Alignment.bottomCenter,
+          //fit: BoxFit.cover,
+          image: AssetImage("assets/images/app_logo/app_logo.png"),
+        ),
+      ),
+      child: Scaffold(
+        //extendBodyBehindAppBar: true,
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(iconTheme: IconThemeData(color: Theme.of(context).primaryColor), backgroundColor: Colors.white,),
+        body: SingleChildScrollView(
+          child: Form(
+            key: registerFormKey,
+            child: Column(
+              children: [
+                //SizedBox(height: Dimensions.height * 0.1),
+                Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Text(
+                    "Create an account",
+                    style: TextStyle(
+                      fontSize: Dimensions.height * 0.04,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(height: Dimensions.height * 0.1),
-              StandardTextFormField(
-                textFormFieldInput: TextFormFieldInput.email,
-                controller: emailController,
-              ),
-              StandardTextFormField(
-                textFormFieldInput: TextFormFieldInput.password,
-                controller: password1Controller,
-              ),
-              StandardTextFormField(
-                textFormFieldInput: TextFormFieldInput.confirmPassword,
-                controller: password2Controller,
-              ),
-              SizedBox(height: Dimensions.height * 0.1),
-              StandardButton(
-                formKey: registerFormKey,
-                contextFromRegisterScreen: context,
-                buttonTypes: ButtonTypes.createAccount,
-                email: emailController,
-                password1: password1Controller,
-                password2: password2Controller,
-              ),
-            ],
+                SizedBox(height: Dimensions.height * 0.1),
+                StandardTextFormField(
+                  textFormFieldInput: TextFormFieldInput.email,
+                  controller: emailController,
+                ),
+                StandardTextFormField(
+                  textFormFieldInput: TextFormFieldInput.password,
+                  controller: password1Controller,
+                ),
+                StandardTextFormField(
+                  textFormFieldInput: TextFormFieldInput.confirmPassword,
+                  controller: password2Controller,
+                ),
+                SizedBox(height: Dimensions.height * 0.1),
+                StandardButton(
+                  formKey: registerFormKey,
+                  contextFromRegisterScreen: context,
+                  buttonTypes: ButtonTypes.createAccount,
+                  email: emailController,
+                  password1: password1Controller,
+                  password2: password2Controller,
+                ),
+              ],
+            ),
           ),
         ),
       ),
