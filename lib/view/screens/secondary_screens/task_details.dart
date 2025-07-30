@@ -138,6 +138,9 @@ class _TaskDetailsState extends State<TaskDetails> {
                     });
                     try {
                       await StorageService.addPhoto(File(fileChosen.path), widget.id!);
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("Media added successfully!")));
                     } catch (e) {
                       print("exception: $e");
                     }
@@ -156,6 +159,9 @@ class _TaskDetailsState extends State<TaskDetails> {
                     try {
                       await StorageService.addPhoto(File(fileChosen.path), widget.id!);
                       mediaUrl = await StorageService.getTaskImage(widget.id!);
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("Media added successfully!")));
                     } catch (e) {
                       print("exception: $e");
                     }
@@ -174,6 +180,9 @@ class _TaskDetailsState extends State<TaskDetails> {
                     try {
                       await StorageService.addPhoto(File(fileChosen.path), widget.id!);
                       mediaUrl = await StorageService.getTaskImage(widget.id!);
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("Media added successfully!")));
                     } catch (e) {}
                   }
                 },
@@ -190,6 +199,9 @@ class _TaskDetailsState extends State<TaskDetails> {
                     try {
                       await StorageService.addPhoto(File(fileChosen.path), widget.id!);
                       mediaUrl = await StorageService.getTaskImage(widget.id!);
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("Media added successfully!")));
                     } catch (e) {}
                   }
                 },
