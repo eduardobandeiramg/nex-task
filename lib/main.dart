@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 import 'package:nex_task/utils/app_color.dart';
 import 'package:nex_task/utils/dimensions.dart';
 import 'package:nex_task/utils/enums/authentication_state.dart';
@@ -12,6 +14,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  MediaKit.ensureInitialized();
 
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
   SupabaseClientStorage.supabaseClient = Supabase.instance.client;

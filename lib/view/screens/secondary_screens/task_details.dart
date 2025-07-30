@@ -14,6 +14,9 @@ import 'package:nex_task/view/components/text_form_fields/updating_task_field.da
 import 'package:nex_task/view/screens/navigation_screen/navigation_screen.dart';
 import 'package:nex_task/view/state_management/new_task_form_state/category_selection_state.dart';
 import '../../components/text_form_fields/task_category_drop_down.dart';
+import 'package:video_player/video_player.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 
 class TaskDetails extends StatefulWidget {
   String? id;
@@ -22,7 +25,7 @@ class TaskDetails extends StatefulWidget {
   String? dueDate;
   String? category;
   String? status;
-  bool hasImage;
+  String? mediaType;
 
   TaskDetails({
     super.key,
@@ -32,7 +35,7 @@ class TaskDetails extends StatefulWidget {
     required this.dueDate,
     required this.category,
     required this.status,
-    required this.hasImage,
+    this.mediaType,
   });
 
   @override
@@ -41,7 +44,7 @@ class TaskDetails extends StatefulWidget {
 
 class _TaskDetailsState extends State<TaskDetails> {
   List<String> categoriesList = [];
-  String? imageUrl;
+  String? mediaUrl;
 
   bool editingTitle = false;
   bool editingDescription = false;
@@ -53,23 +56,48 @@ class _TaskDetailsState extends State<TaskDetails> {
   TextEditingController taskDueDateController = TextEditingController();
 
   File? image;
+  File? video;
+  bool hasImage = false;
+  bool hasVideo = false;
+  bool hasImageFile = false;
+  bool hasVideoFile = false;
   final ImagePicker imagePicker = ImagePicker();
+
+  late final player = Player();
+  late final controller = VideoController(player);
 
   @override
   void initState() {
     super.initState();
+    print(widget.mediaType);
     TasksDatabase.getCategories().then((value) {
       setState(() {
         categoriesList = value;
       });
     });
-    if (widget.hasImage) {
-      StorageService.getTaskImage(widget.id!).then((value) {
-        setState(() {
-          imageUrl = value;
+    if (widget.mediaType != null) {
+      if (widget.mediaType!.contains("image")) {
+        StorageService.getTaskImage(widget.id!).then((value) {
+          setState(() {
+            hasImage = true;
+            mediaUrl = value;
+          });
         });
-      });
+      } else if (widget.mediaType!.contains("video")) {
+        StorageService.getTaskImage(widget.id!).then((value) {
+          setState(() {
+            hasVideo = true;
+            player.open(Media(value));
+          });
+        });
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   @override
@@ -87,36 +115,25 @@ class _TaskDetailsState extends State<TaskDetails> {
             width: Dimensions.width,
             height: Dimensions.height * 0.22,
             child:
-                imageUrl == "error" || imageUrl == null
-                    ? Image.asset(
+                hasImage
+                    ? Image.network(mediaUrl!, fit: BoxFit.cover)
+                    : hasImageFile
+                    ? Image.file(image!)
+                    : hasVideo
+                    ? Video(controller: controller)
+                    : Image.asset(
                       "assets/images/task_standard_image/to_do_list.jpg",
                       fit: BoxFit.cover,
-                    )
-                    : Image.network(imageUrl!, fit: BoxFit.cover),
+                    ),
           ),
           Row(
             children: [
               IconButton(
                 onPressed: () async {
-                  final fileChosen = await imagePicker.pickImage(source: ImageSource.gallery);
-                  if (fileChosen != null) {
-                    setState(() {
-                      image = File(fileChosen.path);
-                    });
-                    try {
-                      await StorageService.addPhoto(File(fileChosen.path), widget.id!);
-                    } catch (e) {
-                      print("exception: $e");
-                    }
-                  }
-                },
-                icon: Icon(Icons.photo),
-              ),
-              IconButton(
-                onPressed: () async {
                   final fileChosen = await imagePicker.pickImage(source: ImageSource.camera);
                   if (fileChosen != null) {
                     setState(() {
+                      hasImageFile = true;
                       image = File(fileChosen.path);
                     });
                     try {
@@ -127,6 +144,60 @@ class _TaskDetailsState extends State<TaskDetails> {
                   }
                 },
                 icon: Icon(Icons.camera_alt),
+              ),
+              IconButton(
+                onPressed: () async {
+                  final fileChosen = await imagePicker.pickImage(source: ImageSource.gallery);
+                  if (fileChosen != null) {
+                    setState(() {
+                      hasImageFile = true;
+                      image = File(fileChosen.path);
+                    });
+                    try {
+                      await StorageService.addPhoto(File(fileChosen.path), widget.id!);
+                      mediaUrl = await StorageService.getTaskImage(widget.id!);
+                    } catch (e) {
+                      print("exception: $e");
+                    }
+                  }
+                },
+                icon: Icon(Icons.photo),
+              ),
+              IconButton(
+                onPressed: () async {
+                  final fileChosen = await imagePicker.pickVideo(source: ImageSource.camera);
+                  if (fileChosen != null) {
+                    /*                    setState(() {
+                      image = File(fileChosen.path);
+                    });*/
+                    try {
+                      await StorageService.addPhoto(File(fileChosen.path), widget.id!);
+                      mediaUrl = await StorageService.getTaskImage(widget.id!);
+                      setState(() {});
+                    } catch (e) {
+                      print("exception: $e");
+                    }
+                  }
+                },
+                icon: Icon(Icons.video_call_outlined),
+              ),
+              IconButton(
+                onPressed: () async {
+                  final fileChosen = await imagePicker.pickVideo(source: ImageSource.gallery);
+                  if (fileChosen != null) {
+                    /*                    setState(() {
+                      image = File(fileChosen.path);
+                    });*/
+                    try {
+                      await StorageService.addPhoto(File(fileChosen.path), widget.id!);
+                      mediaUrl = await StorageService.getTaskImage(widget.id!);
+                      setState(() {});
+                    } catch (e) {
+                      print("exception: $e");
+                    }
+                  }
+                },
+                icon: Icon(Icons.video_collection),
               ),
             ],
           ),

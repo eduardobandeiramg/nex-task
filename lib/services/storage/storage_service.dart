@@ -6,11 +6,11 @@ class StorageService {
     await Supabase.instance.client.storage.from("media").upload("$taskId", file);
   }
 
-  static Future<List<String>> getTasksImages() async {
-    List<String> returnList = [];
+  static Future<List<Map<String, dynamic>>> getTasksImages() async {
+    List<Map<String, dynamic>> returnList = [];
     var resultado = await Supabase.instance.client.storage.from("media").list();
     for (var a in resultado) {
-      returnList.add(a.name);
+      returnList.add({"taskId": a.name, "mediaType": a.metadata!["mimetype"]});
     }
     return returnList;
   }

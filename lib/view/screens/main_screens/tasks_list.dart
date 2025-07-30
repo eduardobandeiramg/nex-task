@@ -17,15 +17,14 @@ class _TasksListState extends State<TasksList> {
   List<Map<String, dynamic>> completeList = [];
   List<TaskCard> toShowList = [];
   TextEditingController controller = TextEditingController();
-  List<String> imageList = [];
+  List<Map<String, dynamic>> mediaList = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     StorageService.getTasksImages().then((value) {
-      imageList = value;
+      mediaList = value;
     });
 
     TasksController.getTasks().then((value) {
@@ -41,7 +40,11 @@ class _TasksListState extends State<TasksList> {
                     dueDate: element["due_date"],
                     category: element["category"],
                     status: element["status"],
-                    hasImage: imageList.contains(element["id"]),
+                    mediaType:
+                        mediaList.firstWhere(
+                          (e) => e["taskId"] == element["id"],
+                          orElse: () => {"mediaType": null},
+                        )["mediaType"],
                   ),
                 )
                 .toList();
@@ -65,7 +68,7 @@ class _TasksListState extends State<TasksList> {
                       controller: controller,
                       onChanged: (value) {
                         setState(() {
-                          toShowList = newTaskList(completeList, value);
+                          toShowList = newTaskList(completeList, value, mediaList);
                         });
                       },
                       leading: Icon(Icons.search),
@@ -95,7 +98,11 @@ class _TasksListState extends State<TasksList> {
   }
 }
 
-List<TaskCard> newTaskList(List<Map<String, dynamic>> list, String query) {
+List<TaskCard> newTaskList(
+  List<Map<String, dynamic>> list,
+  String query,
+  List<Map<String, dynamic>> mediaList,
+) {
   return list
       .where((element) => element["title"].toString().toLowerCase().contains(query.toLowerCase()))
       .map(
@@ -106,7 +113,11 @@ List<TaskCard> newTaskList(List<Map<String, dynamic>> list, String query) {
           dueDate: element["due_date"],
           category: element["category"],
           status: element["status"],
-          hasImage: list.contains(element["id"]),
+          mediaType:
+              mediaList.firstWhere(
+                (e) => e["taskId"] == element["id"],
+                orElse: () => {"mediaType": null},
+              )["mediaType"],
         ),
       )
       .toList();

@@ -9,7 +9,7 @@ class TaskCard extends StatelessWidget {
   String? dueDate;
   String? category;
   String? status;
-  bool hasImage;
+  String? mediaType;
 
   TaskCard({
     super.key,
@@ -19,7 +19,7 @@ class TaskCard extends StatelessWidget {
     required this.dueDate,
     required this.category,
     required this.status,
-    required this.hasImage
+    this.mediaType
   });
 
   @override
@@ -36,7 +36,7 @@ class TaskCard extends StatelessWidget {
                 dueDate: dueDate,
                 category: category,
                 status: status,
-                hasImage: hasImage,
+                mediaType: mediaType,
               );
             },
           ),
