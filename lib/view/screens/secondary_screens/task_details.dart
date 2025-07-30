@@ -119,7 +119,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                     ? Image.network(mediaUrl!, fit: BoxFit.cover)
                     : hasImageFile
                     ? Image.file(image!)
-                    : hasVideo
+                    : hasVideo || hasVideoFile
                     ? Video(controller: controller)
                     : Image.asset(
                       "assets/images/task_standard_image/to_do_list.jpg",
@@ -167,16 +167,14 @@ class _TaskDetailsState extends State<TaskDetails> {
                 onPressed: () async {
                   final fileChosen = await imagePicker.pickVideo(source: ImageSource.camera);
                   if (fileChosen != null) {
-                    /*                    setState(() {
-                      image = File(fileChosen.path);
-                    });*/
+                    setState(() {
+                      hasVideoFile = true;
+                      player.open(Media(fileChosen.path));
+                    });
                     try {
                       await StorageService.addPhoto(File(fileChosen.path), widget.id!);
                       mediaUrl = await StorageService.getTaskImage(widget.id!);
-                      setState(() {});
-                    } catch (e) {
-                      print("exception: $e");
-                    }
+                    } catch (e) {}
                   }
                 },
                 icon: Icon(Icons.video_call_outlined),
@@ -185,16 +183,14 @@ class _TaskDetailsState extends State<TaskDetails> {
                 onPressed: () async {
                   final fileChosen = await imagePicker.pickVideo(source: ImageSource.gallery);
                   if (fileChosen != null) {
-                    /*                    setState(() {
-                      image = File(fileChosen.path);
-                    });*/
+                    setState(() {
+                      hasVideoFile = true;
+                      player.open(Media(fileChosen.path));
+                    });
                     try {
                       await StorageService.addPhoto(File(fileChosen.path), widget.id!);
                       mediaUrl = await StorageService.getTaskImage(widget.id!);
-                      setState(() {});
-                    } catch (e) {
-                      print("exception: $e");
-                    }
+                    } catch (e) {}
                   }
                 },
                 icon: Icon(Icons.video_collection),
